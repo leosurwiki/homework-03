@@ -12,6 +12,7 @@ HOMEWORK-03
 		9 -10 11 -12
 		-13 14 -15 16
 所以在这里我认为很难有一个合适的算法进行-a的操作，我选择使用SAA退火算法，退火时MaxS表示当前状态下选择的最优状态，而RanS表示随意扩展的一个状态，比较这两个状态来判断是否应该选取局部优解，而在大多数情况下该退火算法会得到最优解:
+		
 		void SAA(int v,float T,float r,float Tmin)
 		{
 		    int i,max,maxS=0,ranS,tmp,SMR,sum,ri,j;//State
@@ -47,7 +48,7 @@ HOMEWORK-03
 		        ranS=rand()%ri+1;
 		        for (i=0;i<num;i++)
 		        {
-		            if (available[i]&&!visited[i])
+		       		if (available[i]&&!visited[i])
 		            {
 		                ranS--;
 		                if (ranS==0)
@@ -68,8 +69,7 @@ HOMEWORK-03
 		        }
 		        T*=r;
 		        tmp=SMR==1?estimate(maxS)-estimate(ranS):estimate(ranS);
-		
-		        if (sum+estimate(ranS)>totalmax) {totalmax=sum+estimate(ranS);pseudoexpand(ranS);}
+				if (sum+estimate(ranS)>totalmax) {totalmax=sum+estimate(ranS);pseudoexpand(ranS);}
 		        if (exp(tmp/T)>(rand()%10000)/10000.0){SMR=2;}
 		        T*=r;
 		        switch(SMR)
@@ -81,9 +81,11 @@ HOMEWORK-03
 		        if (sum>totalmax) {totalmax=sum;printf("%d\n",totalmax);for (j=0;j<1024;j++){chosen[j]=visited[j];}}
 		    }
 		}
+
 退火算法详情参见[链接](http://www.sciencedirect.com/science/article/pii/089571779390204C)<br />
 通过五次相同的退火过程，在每次退火过程中设置1000*V(V表示点数)次初始温度，得到一个相当优的解，其很大程度上就是最优解。
 然后对于这个较优解继续进行比较简单的提升通过patch()函数。
+		
 		void patch()
 		{
 		    int i,j,sum,yes;
@@ -117,6 +119,7 @@ HOMEWORK-03
 		        if (yes==0) {break;}
 		    }
 		}
+		
 		struct link * DFS(int v)
 		{
 		    struct link * p;
@@ -157,14 +160,18 @@ HOMEWORK-03
 		    if (q->next!=NULL) return q;
 		    return NULL;
 		}
+
 将其余有正收益的点不断选取，得到最后的一个局部不可扩充的最优解。
 本算法基于时间上的考虑进行了一部分取舍，首先理想情况下应该是通过patch()操作之后得到状态RanS与MaxS，其次patch无法对以下情况进行扩充，以下的情况必须由SAA在退火过程中选取:
+		
 		3 3
 		4 -100 100
 		-5 100 100
 		4 -100 100
+
 两个价值为4的点都无法被patch()，但由于规模小可以在SAA的过程中被挑选出来，于是仍能得到最优解。
 另外-v -h参数对-a参数来说只是建图的方式有所不同。
+		
 		void setgraph(int vertical,int horizontal)
 		{
 		    int i1,j1,i,j,yes;
