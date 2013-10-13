@@ -6,13 +6,14 @@ HOMEWORK-03
 项目回顾
 -----------------------------------
 对于HOMEWORK-02，-a的模式进行了改进，(HOMEWORK-02参见[链接](http://www.cnblogs.com/yuzuka/p/3348333.html)<br />)由于图的规模不容易控制(如果是正负间隔的数据情况则无法使用并查集缩点)：
+### 样例1：
 		4 4
 		1 -2 3 -4 
 		-5 6 -7 8
 		9 -10 11 -12
 		-13 14 -15 16
 所以在这里我认为很难有一个合适的算法进行-a的操作，我选择使用SAA退火算法，退火时MaxS表示当前状态下选择的最优状态，而RanS表示随意扩展的一个状态，比较这两个状态来判断是否应该选取局部优解，而在大多数情况下该退火算法会得到最优解:
-		
+### SAA		
 		void SAA(int v,float T,float r,float Tmin)
 		{
 		    int i,max,maxS=0,ranS,tmp,SMR,sum,ri,j;//State
@@ -85,7 +86,7 @@ HOMEWORK-03
 退火算法详情参见[链接](http://www.sciencedirect.com/science/article/pii/089571779390204C)<br />
 通过五次相同的退火过程，在每次退火过程中设置1000*V(V表示点数)次初始温度，得到一个相当优的解，其很大程度上就是最优解。
 然后对于这个较优解继续进行比较简单的提升通过patch()函数。
-		
+### patch	
 		void patch()
 		{
 		    int i,j,sum,yes;
@@ -163,7 +164,7 @@ HOMEWORK-03
 
 将其余有正收益的点不断选取，得到最后的一个局部不可扩充的最优解。
 本算法基于时间上的考虑进行了一部分取舍，首先理想情况下应该是通过patch()操作之后得到状态RanS与MaxS，其次patch无法对以下情况进行扩充，以下的情况必须由SAA在退火过程中选取:
-		
+### 样例2：		
 		3 3
 		4 -100 100
 		-5 100 100
@@ -171,7 +172,7 @@ HOMEWORK-03
 
 两个价值为4的点都无法被patch()，但由于规模小可以在SAA的过程中被挑选出来，于是仍能得到最优解。
 另外-v -h参数对-a参数来说只是建图的方式有所不同。
-		
+### setgraph:		
 		void setgraph(int vertical,int horizontal)
 		{
 		    int i1,j1,i,j,yes;
