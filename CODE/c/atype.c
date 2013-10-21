@@ -115,7 +115,6 @@ void setgraph(int vertical,int horizontal)
             }
         }
     }
-    printG();
 }
 void printG()
 {
@@ -348,17 +347,17 @@ int deal(int o,int p,int c[],int vertical,int horizontal)
     }
     setgraph(vertical,horizontal);
     holysum = 0;
-    for(z=0;z<5;z++)
+    for(z=0;z<2000;z++)
     {
         for (i=0;i<num;i++)
     	{
     	    if (value[i]>0)
     	    {
-    	        x=20000;
-    	        for (j=0;j<num*1000;j++)
+    	        x=1;
+    	        for (j=0;j<(num/2+1);j++)
     	        {
     	            x*=0.5;
-    	            SAA(i,x,0.99,0.00001);
+    	            SAA(i,x,0.7,0.0001);
     	        }
     	    }
     	}

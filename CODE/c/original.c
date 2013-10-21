@@ -94,7 +94,7 @@ int maxsumblock(int a[],int n,int m,int cycle,int expand)
                 if (tmp>totalmax)
                 {
                     totalmax= tmp;
-                    x1=i;x2=j;
+                    x1=i+1;x2=j;
                 }
             }
         }
@@ -118,7 +118,6 @@ int maxsumblock(int a[],int n,int m,int cycle,int expand)
         }
         else
         {
-            system("pause");
             maxsumline(t,m);
         }
 
@@ -136,9 +135,9 @@ int maxsumblock(int a[],int n,int m,int cycle,int expand)
 }
 int main()
 {
-    int a[4]={1,-1,-2,1},i;
-    printf("%d\n",maxsumblock(a,1,4,1,0));
-    for (i=0;i<4;i++)
+    int a[6]={1,-2,3,1,-2,3},i;
+    printf("%d\n",maxsumblock(a,2,3,0,1));
+    for (i=0;i<6;i++)
     {
         printf("%d ",a[i]);
     }
